@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hh.toogleButton(hhBtn);
     }
     playHhBtn.onclick = function(){
-        snahhre.audio.play();
+        hh.audio.play();
     }
 
     var freestyle = new wsWrapper("#freestyle",fsBtn,playFsBtn);
