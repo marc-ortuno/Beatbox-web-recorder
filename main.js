@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let playFsBtn = document.querySelector('#playFsBtn');
 
     var kick = new wsWrapper("#kick",kickBtn,playKickBtn);
+    kick.name = 'kick';
     kickBtn.onclick = function() {
         kick.toogleButton(kickBtn);
     }
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var snare = new wsWrapper("#snare",snareBtn,playSnareBtn);
+    snare.name = 'snare';
     snareBtn.onclick = function() { 
         snare.toogleButton(snareBtn);
     }
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var hh = new wsWrapper("#hh",hhBtn,playHhBtn);
+    hh.name = 'HiHat';
     hhBtn.onclick = function() {
         hh.toogleButton(hhBtn);
     }
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var freestyle = new wsWrapper("#freestyle",fsBtn,playFsBtn);
+    freestyle.name = 'freestyle';
     fsBtn.onclick = function() {
         freestyle.toogleButton(fsBtn);
     }
@@ -42,6 +46,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 
+    const form = document.getElementById('form');
+    form.addEventListener('submit', function(e){
+        submitForm(e,kick,snare,hh,freestyle);
+    }, false);
 
-    
 });
+
+function submitForm(e,kick,snare,hh,fs){
+    let initials = document.getElementById('initials').value;
+    if(kick){
+        console.log(kick);
+        let audios = [kick,snare,hh,fs];
+        downloadZip(audios,initials)
+    }
+    e.preventDefault();
+
+}
+
+function downloadZip(audios,initials){
+    var zip = new JSZip();
+    var count = 0;
+    var zipFilename = initials+"_beatbox.zip";
+
+    audios.forEach(function(data){
+        console.log("1");
+        file = blobToFile(data.audioBlob, data.name);
+    // loading a file and add it in a zip file
+        zip.file(file.name,file)
+        count++;
+        if (count == audios.length) {
+            zip.generateAsync({type:'blob'}).then(function(content) {
+                saveAs(content, zipFilename);
+            });
+        }
+    });
+}
+
+function blobToFile(theBlob, fileName){
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName + '.wav';
+    return theBlob;
+}

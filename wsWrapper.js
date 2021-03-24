@@ -4,12 +4,15 @@ class wsWrapper{
         this.container = container;
         this.record = record;
         this.play = play;
+        this.name = ""
         this.wavesurfer = undefined;
         this.wave = null;
         this.context = null;
         this.processor = null;
         this.mediaRecorder = null;
         this.audioChunks = [];
+        this.audioURL = "";
+        this.audioBlob = null;
         this.audio = null;
         this.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         this.init();
@@ -35,12 +38,13 @@ class wsWrapper{
             container: this.container,
             waveColor: '#d6cfcbff',
             interact: false,
+            backend: 'MediaElement',
             cursorWidth: 0,
             audioContext: this.context || null,
             audioScriptProcessor: this.processor || null,
             plugins: [
                 WaveSurfer.microphone.create({
-                    bufferSize: 8192,
+                    bufferSize: 4096,
                     numberOfInputChannels: 1,
                     numberOfOutputChannels: 1,
                     constraints: {
@@ -59,9 +63,11 @@ class wsWrapper{
             })
         
             _self.mediaRecorder.addEventListener("stop", () => {
-                const audioBlob = new Blob(_self.audioChunks);
-                const audioUrl = URL.createObjectURL(audioBlob);
-                _self.audio = new Audio(audioUrl);
+                _self.audioBlob = new Blob(_self.audioChunks,{
+                    type: 'audio/wav'
+                  });
+                _self.audioUrl = URL.createObjectURL(_self.audioBlob);
+                _self.audio = new Audio(_self.audioUrl);
                 _self.audioChunks = [];
                 _self.wave = WaveSurfer.create({
                     container: _self.container,
