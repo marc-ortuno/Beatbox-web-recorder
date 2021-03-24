@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Beatbox Recorder</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" />
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@4.6.0/dist/plugin/wavesurfer.microphone.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='wsWrapper.js'></script>
+    <script src='main.js'></script>
+</head>
+<body>
+    <div class="header-container">
+        <h1>Beatbox Recorder</h1>
+        <h3>Record yourself beatboxing to contribute to the VPC dataset.</h3>
+        <div id="waveform"></div>
+        <h2>Kick</h2>
+        <h4>Make the sound of a kick (at least 5 times)</h4>
+        <audio class="audio-container" controls preload="none">
+            <source src="./data/Kick1_AFRI2.wav" type="audio/wav">
+        </audio>
+        <div id="kick"></div>
+        <div class="controls">
+            <button id="kickBtn" class="mic-button" data-action="start">
+                <i class="glyphicon glyphicon-record"></i>
+                Record
+            </button>
+            <button id="playKickBtn" class="play-button" data-action="start">
+                <i class="glyphicon glyphicon-play"></i> Play
+            </button>
+        </div>
+        <h2>Snare</h2>
+        <h4>Make the sound of a snare (at least 5 times)</h4>
+        <audio class="audio-container" controls preload="none">
+            <source src="./data/Snare2_CraI3.wav" type="audio/wav">
+        </audio>
+        <div id="snare"></div>
+        <div class="controls">
+            <button id="snareBtn" class="mic-button" data-action="start">
+                <i class="glyphicon glyphicon-record"></i>
+                Record
+            </button>
+            <button id="playSnareBtn" class="play-button" data-action="start">
+                <i class="glyphicon glyphicon-play"></i> Play
+            </button>
+        </div>
+        <h2>Hi-Hat</h2>
+        <h4>Make the sound of a hi-hat (at least 5 times)</h4>
+        <audio class="audio-container" controls preload="none">
+            <source src="./data/HH13_CavI3.wav" type="audio/wav">
+        </audio>
+        <div id="hh"></div>
+        <div class="controls">
+            <button id="hhBtn" class="mic-button" data-action="start">
+                <i class="glyphicon glyphicon-record"></i>
+                Record
+            </button>
+            <button id="playHhBtn" class="play-button" data-action="start">
+                <i class="glyphicon glyphicon-play"></i> Play
+            </button>
+        </div>
+        <h2>Freestyle</h2>
+        <h4>Do some freestyle using this three sounds above</h4>
+        <audio class="audio-container" controls preload="none">
+            <source src="./data/JoSP2.wav" type="audio/wav">
+        </audio>
+        <div id="freestyle"></div>
+        <div class="controls">
+            <button id="fsBtn" class="mic-button" data-action="start">
+                <i class="glyphicon glyphicon-record"></i>
+                Record
+            </button>
+            <button id="playFsBtn" class="play-button" data-action="start">
+                <i class="glyphicon glyphicon-play"></i> Play
+            </button>
+        </div>
+        <form>
+            <input type="text" placeholder="Initials (i.e. MOB)" required>
+            <input type="text" placeholder="Microphone (Optional)">
+            <input type="submit" title="send">
+        </form>
+    </div>
+</body>
+</html>

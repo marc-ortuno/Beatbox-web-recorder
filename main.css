@@ -1,0 +1,70 @@
+:root{
+    --independence: #565264ff;
+    --old-lavender: #706677ff;
+    --english-lavender: #a6808cff;
+    --silver-pink: #ccb7aeff;
+    --timberwolf: #d6cfcbff;
+}
+
+body{
+    background-color: var(--independence);
+}
+
+h1,h2{
+    color:var(--timberwolf);
+    font-weight: bold;
+    text-align: center;
+}
+
+h3,h4{
+    color:var(--timberwolf);
+    text-align: center; 
+}
+form{
+    width: 40vw;
+    margin: 0 auto;
+}
+input[type=text] {
+    background-color: white;
+    color: var(--old-lavender);
+    font-size:larger;
+    text-align: center; 
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+input[type=submit] {
+    background-color: var(--english-lavender);
+    color: var(--timberwolf);
+    font-size:larger;
+    text-align: center; 
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.audio-container{
+    margin: 0 auto; 
+    display: block;
+    outline: none;
+}
+
+.header-container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mic-button,.play-button{
+    background-color: var(--english-lavender);
+    color: var(--timberwolf);
+}
+
+
+#kick,#snare,#hh,#freestyle{
+    outline: 1pt solid var(--silver-pink);
+    margin: 15px 0px;
+}
+
+.controls{
+    text-align: center;
+    margin:20px;
+}
