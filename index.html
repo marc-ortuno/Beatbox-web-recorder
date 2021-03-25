@@ -10,6 +10,13 @@
     <script src="https://unpkg.com/wavesurfer.js@4.6.0/dist/plugin/wavesurfer.microphone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" integrity="sha512-y3o0Z5TJF1UsKjs/jS2CDkeHN538bWsftxO9nctODL5W40nyXIbs0Pgyu7//icrQY9m6475gLaVr39i/uh/nLA==" crossorigin="anonymous"></script>
+    <!-- load OpusMediaRecorder.umd.js. OpusMediaRecorder will be loaded. -->
+    <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"></script>
+    <!-- load encoderWorker.umd.js. This should be after OpusMediaRecorder. -->
+    <!-- This script tag will create OpusMediaRecorder.encoderWorker. -->
+    <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"></script>
+
+    <script src="lib/WavAudioEncoder.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js" integrity="sha512-3WaCYjK/lQuL0dVIRt1thLXr84Z/4Yppka6u40yEJT1QulYm9pCxguF6r8V84ndP5K03koI9hV1+zo/bUbgMtA==" crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
@@ -17,75 +24,115 @@
     <script src='main.js'></script>
 </head>
 <body>
-    <div class="header-container">
-        <h1>Beatbox Recorder</h1>
-        <h3>Record yourself beatboxing to contribute to the VPC dataset.</h3>
-        <div id="waveform"></div>
-        <h2>Kick</h2>
-        <h4>Make the sound of a kick (at least 5 times)</h4>
-        <audio class="audio-container" controls preload="none">
-            <source src="./data/Kick1_AFRI2.wav" type="audio/wav">
-        </audio>
-        <div id="kick"></div>
-        <div class="controls">
-            <button id="kickBtn" class="mic-button" data-action="start">
-                <i class="glyphicon glyphicon-record"></i>
-                Record
-            </button>
-            <button id="playKickBtn" class="play-button" data-action="start">
-                <i class="glyphicon glyphicon-play"></i> Play
-            </button>
+    <div class="main-container">
+        <h1 class="title">Beatbox Recorder</h1>
+        <h3 class="title2">Record yourself beatboxing to contribute to the VPC dataset.</h3>
+        <div id="step-1" class="page active">
+            <h3>This website is distributed to record beatbox sounds in order to create the dataset for the project: </h3>
+            <h2>"Vocal Percussion Classification For Real-Time Context"</h2>
+            <br>
+            <h3>The process consists of 3️⃣ steps:</h3>
+            <h3>1) Record your beatbox sounds. 🎤</h3>
+            <h3>2) Fill the form with your data and download the zip file. 📝</h3>
+            <h3>3) Finally, upload the zip file to <a href="https://drive.google.com/drive/u/2/folders/1b1Ot7ipB6TtpXZqqB7P8dw87jsmN2veI" target="blank">this</a> Drive. 📁 (VM accounts)</h3>
+            <br>
+            <h3>For more information contact <a href="mailto:marc.ortuno@voicemod.net">here</a>.</h3>
+            <br>
+            <div class="div-button">
+                <button id="next-1">Next</button>
+            </div>
         </div>
-        <h2>Snare</h2>
-        <h4>Make the sound of a snare (at least 5 times)</h4>
-        <audio class="audio-container" controls preload="none">
-            <source src="./data/Snare2_CraI3.wav" type="audio/wav">
-        </audio>
-        <div id="snare"></div>
-        <div class="controls">
-            <button id="snareBtn" class="mic-button" data-action="start">
-                <i class="glyphicon glyphicon-record"></i>
-                Record
-            </button>
-            <button id="playSnareBtn" class="play-button" data-action="start">
-                <i class="glyphicon glyphicon-play"></i> Play
-            </button>
+        <div id="step-2" class="page">
+            <h2>Step 1: Record your beatbox!🎤</h2>
+            <div id="waveform"></div>
+            <h2 style="color:white">Kick</h2>
+            <h4>Make the sound of a kick (at least 5 times)</h4>
+            <audio class="audio-container" controls preload="none">
+                <source src="./data/Kick1_AFRI2.wav" type="audio/wav">
+            </audio>
+            <div id="kick"></div>
+            <div class="controls">
+                <button id="kickBtn" class="mic-button" data-action="start">
+                    <i class="glyphicon glyphicon-record"></i>
+                </button>
+                <button id="playKickBtn" class="play-button" data-action="start">
+                    <i class="glyphicon glyphicon-play"></i>
+                </button>
+            </div>
+            <h2 style="color:white">Snare</h2>
+            <h4>Make the sound of a snare (at least 5 times)</h4>
+            <audio class="audio-container" controls preload="none">
+                <source src="./data/Snare2_CraI3.wav" type="audio/wav">
+            </audio>
+            <div id="snare"></div>
+            <div class="controls">
+                <button id="snareBtn" class="mic-button" data-action="start">
+                    <i class="glyphicon glyphicon-record"></i>
+                </button>
+                <button id="playSnareBtn" class="play-button" data-action="start">
+                    <i class="glyphicon glyphicon-play"></i>
+                </button>
+            </div>
+            <h2 style="color:white">Hi-Hat</h2>
+            <h4>Make the sound of a hi-hat (at least 5 times)</h4>
+            <audio class="audio-container" controls preload="none">
+                <source src="./data/HH13_CavI3.wav" type="audio/wav">
+            </audio>
+            <div id="hh"></div>
+            <div class="controls">
+                <button id="hhBtn" class="mic-button" data-action="start">
+                    <i class="glyphicon glyphicon-record"></i>
+                </button>
+                <button id="playHhBtn" class="play-button" data-action="start">
+                    <i class="glyphicon glyphicon-play"></i>
+                </button>
+            </div>
+            <h2 style="color:white">Freestyle</h2>
+            <h4>Do some freestyle using this three sounds above</h4>
+            <audio class="audio-container" controls preload="none">
+                <source src="./data/JoSP2.wav" type="audio/wav">
+            </audio>
+            <div id="freestyle"></div>
+            <div class="controls">
+                <button id="fsBtn" class="mic-button" data-action="start">
+                    <i class="glyphicon glyphicon-record"></i>
+                </button> 
+                <button id="playFsBtn" class="play-button" data-action="start">
+                    <i class="glyphicon glyphicon-play"></i>
+                </button>
+            </div>
+            <div class="div-button">
+                <button id="back-2">Previous</button>
+                <button id="next-2">Next</button>
+            </div>
         </div>
-        <h2>Hi-Hat</h2>
-        <h4>Make the sound of a hi-hat (at least 5 times)</h4>
-        <audio class="audio-container" controls preload="none">
-            <source src="./data/HH13_CavI3.wav" type="audio/wav">
-        </audio>
-        <div id="hh"></div>
-        <div class="controls">
-            <button id="hhBtn" class="mic-button" data-action="start">
-                <i class="glyphicon glyphicon-record"></i>
-                Record
-            </button>
-            <button id="playHhBtn" class="play-button" data-action="start">
-                <i class="glyphicon glyphicon-play"></i> Play
-            </button>
+        <div id="step-3" class="page">
+            <h2 style="margin-bottom:20px">Step 2: Add your data and download the files! 📝</h2>
+            <form id="form" action="#">
+                <input id="initials" type="text" placeholder="Initials (i.e. MOB)" required>
+                <div class="form-gender">
+                    <input type="radio" name="gender" value="Male" checked><span>Male</span>
+                    <input type="radio" name="gender" value="Female"><span>Female</span>
+                    <input type="radio" name="gender" value="Others"><span>Others</span>   
+                </div> 
+                <input id="age" type="text" placeholder="Age" required>     
+                <input id="microphone" type="text" placeholder="Microphone (Optional)">      
+                <input type="submit" value="download" title="download">
+            </form>
+            <div class="div-button">
+                <button id="back-3">Previous</button>
+                <button id="next-3">Next</button>
+            </div>
         </div>
-        <h2>Freestyle</h2>
-        <h4>Do some freestyle using this three sounds above</h4>
-        <audio class="audio-container" controls preload="none">
-            <source src="./data/JoSP2.wav" type="audio/wav">
-        </audio>
-        <div id="freestyle"></div>
-        <div class="controls">
-            <button id="fsBtn" class="mic-button" data-action="start">
-                <i class="glyphicon glyphicon-record"></i>
-                Record
-            </button>
-            <button id="playFsBtn" class="play-button" data-action="start">
-                <i class="glyphicon glyphicon-play"></i> Play
-            </button>
+        <div id="step-4" class="page">
+            <h2 style="margin-bottom:20px">Step 3: Upload the zip file to Google Drive 📁</h2>
+            <br>
+            <h3>Upload the file <a href="https://drive.google.com/drive/u/2/folders/1b1Ot7ipB6TtpXZqqB7P8dw87jsmN2veI" target="blank">here</a></h3>
+            <br>
+            <div class="div-button">
+                <button id="back-4">Previous</button>
+            </div>
         </div>
-        <form id="form" action="#">
-            <input id="initials" type="text" placeholder="Initials (i.e. MOB)" required>
-            <input id="microphone" type="text" placeholder="Microphone (Optional)">
-            <input type="submit" value="download" title="download">
-        </form>
     </div>
 </body>
 </html>

@@ -1,32 +1,46 @@
 :root{
-    --independence: #565264ff;
-    --old-lavender: #706677ff;
-    --english-lavender: #a6808cff;
-    --silver-pink: #ccb7aeff;
-    --timberwolf: #d6cfcbff;
+    --main: #00FFF6;
+    --light:#0053d8;
+    --sun:#fdf69b;
+    --background: #1e2023;
+    --dark: #171819;
+    --text: #f2e9e4ff;
+
 }
 
 body{
-    background-color: var(--independence);
+    background-color: var(--background);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 h1,h2{
-    color:var(--timberwolf);
+    color:var(--main);
     font-weight: bold;
     text-align: center;
 }
 
+
 h3,h4{
-    color:var(--timberwolf);
+    color:var(--text);
     text-align: center; 
 }
+span{
+    color:var(--text);
+    margin: 0px 15px;   
+}
+
 form{
     width: 40vw;
     margin: 0 auto;
 }
 input[type=text] {
     background-color: white;
-    color: var(--old-lavender);
+    color: var(--dark);
     font-size:larger;
     text-align: center; 
     width: 100%;
@@ -34,37 +48,80 @@ input[type=text] {
 }
 
 input[type=submit] {
-    background-color: var(--english-lavender);
-    color: var(--timberwolf);
+    background-color: var(--dark);
+    color: var(--main);
     font-size:larger;
-    text-align: center; 
     width: 100%;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
+input[type=radio] {
+    transform: scale(2);
+}
+
+button {
+    background-color: var(--dark);
+    color: var(--main);
+    font-size:larger;
+    width: 300px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.div-button{
+    width:100%;
+    text-align: center;
+}
 .audio-container{
     margin: 0 auto; 
     display: block;
     outline: none;
 }
 
-.header-container{
-    max-width: calc(100% - 200px);
+.main-container{
+    max-width: 100%;
     margin: 0 auto;
 }
 
+.page{
+    max-width: calc(100% - 200px);
+    margin: 0 auto;
+    display: none;
+    margin-top: 50px;
+}
+.page.active{
+    display: block;
+}
+
 .mic-button,.play-button{
-    background-color: var(--english-lavender);
-    color: var(--timberwolf);
+    height: 60px;
+    width: 60px;  
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--dark);
+    color: var(--main);
 }
 
 
 #kick,#snare,#hh,#freestyle{
-    outline: 1pt solid var(--silver-pink);
+    outline: 1pt solid var(--main);
     margin: 15px 0px;
 }
 
 .controls{
     text-align: center;
-    margin:20px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-gender{
+    display: flex;
+    justify-content: center;
+    margin: 15px;
 }

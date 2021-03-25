@@ -1,3 +1,10 @@
+const workerOptions = {
+    OggOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.8.0/OggOpusEncoder.wasm',
+    WebMOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.8.0/WebMOpusEncoder.wasm'
+  };
+  
+  // Polyfill MediaRecorder
+  window.MediaRecorder = OpusMediaRecorder;
 
 class wsWrapper{
     constructor(container,record,play){
@@ -36,9 +43,8 @@ class wsWrapper{
         // Init wavesurfer
         this.wavesurfer = WaveSurfer.create({
             container: this.container,
-            waveColor: '#d6cfcbff',
+            waveColor: '#00FFF6',
             interact: false,
-            backend: 'MediaElement',
             cursorWidth: 0,
             audioContext: this.context || null,
             audioScriptProcessor: this.processor || null,
@@ -56,34 +62,44 @@ class wsWrapper{
         });
         var _self = this;
         this.wavesurfer.microphone.on('deviceReady', function(stream) {
-            _self.mediaRecorder = new MediaRecorder(stream);
-            _self.mediaRecorder.start();
-            _self.mediaRecorder.addEventListener('dataavailable', event=>{
-                _self.audioChunks.push(event.data);              
-            })
-        
-            _self.mediaRecorder.addEventListener("stop", () => {
-                _self.audioBlob = new Blob(_self.audioChunks,{
-                    type: 'audio/wav'
-                  });
+            //Media recorder doesnt support wav webm only!!
+            const options = { mimeType: 'audio/wav' }
+
+            _self.mediaRecorder = new MediaRecorder(stream,options, workerOptions);
+            _self.mediaRecorder.onstart = _ => {
+                _self.dataChunks = [];
+                console.log('Recorder started');
+            };
+
+            _self.mediaRecorder.ondataavailable = (e)=>{
+                console.log('Recorder data available');
+                _self.audioChunks.push(e.data);              
+            }
+            _self.mediaType = _self.mediaRecorder.mimeType;
+
+            _self.mediaRecorder.onstop = (e)=> {
+                _self.audioBlob = new Blob(_self.audioChunks,{ 'type' :  _self.mediaRecorder.mimeType });
                 _self.audioUrl = URL.createObjectURL(_self.audioBlob);
                 _self.audio = new Audio(_self.audioUrl);
                 _self.audioChunks = [];
                 _self.wave = WaveSurfer.create({
                     container: _self.container,
-                    waveColor: '#d6cfcbff',
-                    progressColor: '#a6808cff',
+                    waveColor: '#00FFF6',
+                    progressColor: '#0089ff',
                     backend: 'MediaElement',
                     interact: true,
                     cursorWidth: 1,
                     audioContext: _self.context || null,
                     audioScriptProcessor: _self.processor || null,
                 });
+
                 _self.wave.load(_self.audio);
                 _self.wavesurfer.destroy();
                 _self.wavesurfer = undefined;
-            });
+            };
+            _self.mediaRecorder.start();
         });
+
         this.wavesurfer.microphone.on('deviceError', function(code) {
             console.warn('Device error: ' + code);
         });
@@ -97,9 +113,14 @@ class wsWrapper{
         if(this.wavesurfer != undefined){
             if (this.wavesurfer.microphone.active) {
                 this.wavesurfer.microphone.stop();
-                button.style.color = '#d6cfcbff';
+                if(this.mediaRecorder){
+                    console.log("e");
+                    this.mediaRecorder.stop();
+                }
+                button.style.color = '#00FFF6';
             } else {
                 this.wavesurfer.microphone.start();
+
                 button.style.color = 'red';
             }
         } else {
