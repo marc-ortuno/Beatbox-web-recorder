@@ -118,10 +118,10 @@ function downloadZip(audios,initials,age,micro,gender){
     var zip = new JSZip();
     var count = 0;
     var zipFilename = initials+"_"+Date.now()+".zip";
-    var log = "Initials: " + initials+"\n"+ 
-                "Gender: " + gender+"\n"+ 
-                "Age: " + age+"\n"+ 
-                "Microphone: " + micro+"\n";
+    var log = "Initials;" + initials+"\n"+ 
+                "Gender;" + gender+"\n"+ 
+                "Age;" + age+"\n"+ 
+                "Microphone;" + micro+"\n";           
 
     audios.forEach(function(data){
         file = blobToFile(data.audioBlob, data.name,initials);
@@ -129,7 +129,7 @@ function downloadZip(audios,initials,age,micro,gender){
         zip.file(file.name,file)
         count++;
         if (count == audios.length) {
-            zip.file("log.txt",log)
+            zip.file("participant_data.csv",log)
             zip.generateAsync({type:'blob'}).then(function(content) {
                saveAs(content, zipFilename);
             });

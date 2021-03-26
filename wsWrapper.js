@@ -68,11 +68,9 @@ class wsWrapper{
             _self.mediaRecorder = new MediaRecorder(stream,options, workerOptions);
             _self.mediaRecorder.onstart = _ => {
                 _self.dataChunks = [];
-                console.log('Recorder started');
             };
 
             _self.mediaRecorder.ondataavailable = (e)=>{
-                console.log('Recorder data available');
                 _self.audioChunks.push(e.data);              
             }
             _self.mediaType = _self.mediaRecorder.mimeType;
@@ -114,7 +112,6 @@ class wsWrapper{
             if (this.wavesurfer.microphone.active) {
                 this.wavesurfer.microphone.stop();
                 if(this.mediaRecorder){
-                    console.log("e");
                     this.mediaRecorder.stop();
                 }
                 button.style.color = '#00FFF6';
